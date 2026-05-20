@@ -10,9 +10,9 @@ settings.set(settings.DISABLE_OPENING_SUBTRACTIONS, False)
 #TODO add office check and atrium and meeting rooms https://timmcginley.github.io/41936/Project/index.html#s05-meeting-rooms
 
 # get the model
-num = "15"
+num = "10"
 part = "C"
-year = "25"
+year = "26"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
 loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"/BIM/"
 
