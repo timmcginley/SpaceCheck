@@ -10,14 +10,16 @@ settings.set(settings.DISABLE_OPENING_SUBTRACTIONS, False)
 #TODO add office check and atrium and meeting rooms https://timmcginley.github.io/41936/Project/index.html#s05-meeting-rooms
 
 # get the model
-num = "03"
+num = "15"
 part = "C"
-year = "26"
+year = "25"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
 loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"/BIM/"
 
 
 file = ifcopenshell.open(loc + num + '/'+year+'-'+num+'-'+part+'-ARCH.ifc')
+#file = ifcopenshell.open(loc + num + '/26-01-C-Existing building308.ifc')
+
 spaces = file.by_type("IfcSpace")
 print("Team: " + num+" "+year+" "+part)
 print("IFC SCHEMA: " + file.schema)
@@ -133,22 +135,33 @@ aud = "[FAIL] "
 multi= "[FAIL] "
 library= "[FAIL] "
 cafe= "[FAIL] "
+atrium= "[FAIL] "
+office = 0
+total_area = 0
 for space in spaces:
     space_area = get_area(space)
     storey = get_storey(space, file)
     area_str = f"{round(space_area,2)}m2" if space_area is not None else 'N/A'
+    total_area += space_area if space_area is not None else 0
     if ("auditorium" in space.LongName.lower()):
         aud = "[PASS] " + space.LongName +"\t" + area_str
     if ("cafe" in space.LongName.lower()):
         cafe = "[PASS] " + space.LongName +"\t" + area_str
     if ("library" in space.LongName.lower()):
-        library = "[PASS] " + space.LongName +"\t" + area_str
+        if space_area is not None and space_area >= 100:
+            library = "[PASS] " + space.LongName +"\t" + area_str
+        else :
+            library = "[FAIL] " + space.LongName +"\t" + area_str + " (too small)"
+    if ("atrium" in space.LongName.lower()):
+        atrium = "[PASS] " + space.LongName +"\t" + area_str
+    if ("office" in space.LongName.lower()):
+        office += space_area if space_area is not None else 0
     if ("multi" in space.LongName.lower()):
-        if space_area is not None and space_area > 250:
+        if space_area is not None and space_area >= 250:
             multi = "[PASS] " + space.LongName +"\t" + area_str
         else :
             multi = "[FAIL] " + space.LongName +"\t" + area_str + " (too small)"
-    #print(f"{space.GlobalId} : {space.Name} \t ({area_str})  \t{space.LongName}\t{storey.Name if storey else 'No Storey'}")
+    print(f"{space.GlobalId} : {space.Name} \t ({area_str})  \t{space.LongName}\t{storey.Name if storey else 'No Storey'}")
 
 
 print("Test 01 Sche = "+ schema)
@@ -156,3 +169,6 @@ print("Test 02 Audi = "+ aud)
 print("Test 03 Mult = "+ multi)
 print("Test 04 Libr = "+ library)
 print("Test 05 cafe = "+ cafe)
+print("Test 06 Atri = "+ atrium)
+print("total office = "+ str(round(office, 2))+" m2")
+print("total area = "+ str(round(total_area, 2))+" m2")
