@@ -16,18 +16,37 @@ year = "26"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
 loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"/BIM/"
 
-
-file = ifcopenshell.open(loc + num + '/'+year+'-'+num+'-'+part+'-ARCH.ifc')
+file_loc = loc + num + '/'+year+'-'+num+'-'+part+'-ARCH.ifc'
+file = ifcopenshell.open(file_loc)
 #file = ifcopenshell.open(loc + num + '/26-01-C-Existing building308.ifc')
 
 spaces = file.by_type("IfcSpace")
+print("IFC SCHEMA: " + file.schema)
+
+desk_count = 0
+
+
+
+def is_desk(element):
+    if element.is_a("IfcBuildingElementProxy") or element.is_a("IfcFurniture"):
+        name = (element.Name or "").lower()
+        obj_type = (element.ObjectType or "").lower()
+        return "desk" in name or "desk" in obj_type
+    return False
+
+
 print("Team: " + num+" "+year+" "+part)
 print("IFC SCHEMA: " + file.schema)
 
 if file.schema == "IFC4" or file.schema == "IFC4X3":
     schema = "[PASS] " + file.schema
+    furn = file.by_type("IfcFurniture")
+    for f in furn:
+        if is_desk(f):
+            desk_count += 1
 else:
-    schema = "[FAIL] " + file.schema  
+    schema = "[FAIL] " + file.schema 
+
 
 # get the spaces and calculate their areas
 print("There are {} spaces in the IFC file:" .format(len(spaces)))
@@ -161,7 +180,7 @@ for space in spaces:
             multi = "[PASS] " + space.LongName +"\t" + area_str
         else :
             multi = "[FAIL] " + space.LongName +"\t" + area_str + " (too small)"
-    print(f"{space.GlobalId} : {space.Name} \t ({area_str})  \t{space.LongName}\t{storey.Name if storey else 'No Storey'}")
+    #print(f"{space.GlobalId} : {space.Name} \t ({area_str})  \t{space.LongName}\t{storey.Name if storey else 'No Storey'}")
 
 
 print("Test 01 Sche = "+ schema)
@@ -170,5 +189,6 @@ print("Test 03 Mult = "+ multi)
 print("Test 04 Libr = "+ library)
 print("Test 05 cafe = "+ cafe)
 print("Test 06 Atri = "+ atrium)
+print("Test 07 Desk = "+ str(desk_count))
 print("total office = "+ str(round(office, 2))+" m2")
 print("total area = "+ str(round(total_area, 2))+" m2")
