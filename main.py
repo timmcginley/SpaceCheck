@@ -10,7 +10,7 @@ settings.set(settings.DISABLE_OPENING_SUBTRACTIONS, False)
 #TODO add office check and atrium and meeting rooms https://timmcginley.github.io/41936/Project/index.html#s05-meeting-rooms
 
 # get the model
-num = "08"
+num = "10"
 part = "D"
 year = "26"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
@@ -24,7 +24,6 @@ spaces = file.by_type("IfcSpace")
 print("IFC SCHEMA: " + file.schema)
 
 desk_count = 0
-
 
 
 def is_desk(element):
