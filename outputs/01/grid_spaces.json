@@ -6,17 +6,17 @@
   },
   "1 floor": {
     "storey_globalid": "1ZGO8hrFCHqw0v0026FpFv",
-    "elevation": 4000.0000000000005,
+    "elevation": 4000.0,
     "grids": []
   },
   "2 floor": {
     "storey_globalid": "1HxO4Ydl5Ape$245qGpPXM",
-    "elevation": 7500.000000000001,
+    "elevation": 7500.0,
     "grids": []
   },
   "floor 2 floor": {
     "storey_globalid": "3rlkYoaTb34PtNhuH$RsCY",
-    "elevation": 7700.000000000001,
+    "elevation": 7700.0,
     "grids": []
   },
   "roof auditorium": {
@@ -31,7 +31,7 @@
   },
   "top roof": {
     "storey_globalid": "0j$evtBUfE58Mp77fcfTcK",
-    "elevation": 16000.000000000002,
+    "elevation": 16000.0,
     "grids": []
   }
 }

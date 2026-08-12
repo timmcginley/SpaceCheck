@@ -10,11 +10,12 @@ settings.set(settings.DISABLE_OPENING_SUBTRACTIONS, False)
 #TODO add office check and atrium and meeting rooms https://timmcginley.github.io/41936/Project/index.html#s05-meeting-rooms
 
 # get the model
-num = "10"
+num = "01"
 part = "D"
 year = "26"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
-loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"/BIM/"
+#loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"/BIM/"
+loc ="C:/Users/TIMMC/OneDrive - Danmarks Tekniske Universitet/Skrivebord/36"+year+part+"-A/BIM/"
 
 file_loc = loc + num + '/'+year+'-'+num+'-'+part+'-ARCH.ifc'
 file = ifcopenshell.open(file_loc)
@@ -658,7 +659,8 @@ def assign_spaces_to_grid_squares(model, out_json_path='grid_spaces.json', out_d
         os.makedirs(out_dir, exist_ok=True)
         out_path = os.path.join(out_dir, out_json_path)
         with open(out_path, 'w', encoding='utf-8') as f:
-            json.dump(output, f, indent=2)
+            # Explicitly set separators to ensure spaces after commas and colons
+            json.dump(output, f, indent=2, separators=(', ', ': '), ensure_ascii=False)
         print(f"Wrote grid-space assignments to {out_path}")
     except Exception as e:
         print("Failed to write JSON:", e)
