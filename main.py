@@ -10,7 +10,11 @@ settings.set(settings.DISABLE_OPENING_SUBTRACTIONS, False)
 #TODO add office check and atrium and meeting rooms https://timmcginley.github.io/41936/Project/index.html#s05-meeting-rooms
 
 # get the model
+<<<<<<< Updated upstream
 num = "10"
+=======
+num = "01"
+>>>>>>> Stashed changes
 part = "D"
 year = "26"
 #file = ifcopenshell.open('models/ARCH_B112_IFC4.ifc')
